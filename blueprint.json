@@ -49,7 +49,7 @@
 			"step": "installPlugin",
 			"pluginData": {
 				"resource": "wordpress.org/plugins",
-				"slug": "wp-file-manager"
+				"slug": "debug-log-manager"
 			},
 			"options": {
 				"activate": true
@@ -57,7 +57,7 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php require '/wordpress/wp-load.php'; update_option( 'debug_log_inspector_plugins', json_decode( '[{\"name\": \"Meetup RSVP Desk\", \"file_path\": \"meetup-rsvp-desk/meetup-rsvp-desk.php\", \"search_terms\": \"meetup-rsvp-desk\", \"enabled\": true}]', true ) );"
+			"code": "<?php\nrequire '/wordpress/wp-load.php';\n\n// Lumiblog Debug Log Inspector: watch Meetup RSVP Desk.\nupdate_option( 'debug_log_inspector_plugins', json_decode( '[{\"name\": \"Meetup RSVP Desk\", \"file_path\": \"meetup-rsvp-desk/meetup-rsvp-desk.php\", \"search_terms\": \"meetup-rsvp-desk\", \"enabled\": true}]', true ) );\n\n// Debug Log Manager: show wp-content/debug.log (Playground always logs there) with logging switched on.\nupdate_option( 'debug_log_manager_file_path', WP_CONTENT_DIR . '/debug.log', false );\nupdate_option( 'debug_log_manager', array( 'status' => 'enabled', 'on' => gmdate( 'M j, Y H:i:s' ) ), false );\n"
 		}
 	]
 }
