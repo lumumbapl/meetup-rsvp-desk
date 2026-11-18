@@ -1,0 +1,63 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "Meetup RSVP Desk: Bug Report Demo",
+		"description": "WordCamp Nairobi 2026: How to Write Bug Reports that Developers Love",
+		"author": "lumiblog"
+	},
+	"landingPage": "/wp-admin/admin.php?page=meetup-rsvp-desk",
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "latest"
+	},
+	"steps": [
+		{
+			"step": "login"
+		},
+		{
+			"step": "defineWpConfigConsts",
+			"consts": {
+				"WP_DEBUG": true,
+				"WP_DEBUG_LOG": true,
+				"WP_DEBUG_DISPLAY": false
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "git:directory",
+				"url": "https://github.com/lumumbapl/meetup-rsvp-desk",
+				"ref": "master",
+				"refType": "branch"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "meetup-rsvp-desk"
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "lumiblog-debug-log-inspector"
+			},
+			"options": {
+				"activate": true
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "wp-file-manager"
+			},
+			"options": {
+				"activate": true
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-load.php'; update_option( 'debug_log_inspector_plugins', json_decode( '[{\"name\": \"Meetup RSVP Desk\", \"file_path\": \"meetup-rsvp-desk/meetup-rsvp-desk.php\", \"search_terms\": \"meetup-rsvp-desk\", \"enabled\": true}]', true ) );"
+		}
+	]
+}
